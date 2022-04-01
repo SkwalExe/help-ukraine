@@ -66,6 +66,14 @@ help-ukraine -d 200
 
 # Docker 🐳
 
+## Run the latest version
+
+```bash
+docker run --rm -it ghcr.io/skwalexe/help-ukraine:main
+```
+
+## Test your changes 🚧
+
 ### Build 🛠️
 
 ```bash
