@@ -3,6 +3,7 @@
 
 extern crate reqwest;
 use crossterm_cursor::TerminalCursor;
+use device_query::{DeviceQuery, DeviceState, Keycode};
 use std::io::Write;
 use std::process;
 use std::time::SystemTime;
@@ -24,6 +25,21 @@ fn print_wait(text: &str) {
 }
 
 fn main() {
+    // thread to detect when q is pressed -> exit
+    std::thread::spawn(|| {
+        let device_state = DeviceState::new();
+
+        loop {
+            let keys: Vec<Keycode> = device_state.get_keys();
+            for key in keys.iter() {
+                // if key is q
+                if key == &Keycode::Q {
+                    process::exit(0);
+                }
+            }
+        }
+    });
+
     let mut confirm = true; // if the program should ask for confirmation before running
     let mut delay = 20; // delay between each request
     let mut command = "ddos"; // command to run (ddos, version, help)
